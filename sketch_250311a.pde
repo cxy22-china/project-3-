@@ -21,6 +21,7 @@ float sliderMax = 700;
 float thickenss;
 PImage speed; 
 boolean speedOn; //true or false
+float speedsize;
 
 
 void setup() {
@@ -29,7 +30,7 @@ void setup() {
   strokeWeight(2);
   sliderX = 500;
   shade = 123;
-
+speedsize =20; 
 speed = loadImage("speed.png");
 speedOn = false; 
 
@@ -66,29 +67,53 @@ void draw() {
  
  
  //save buttons plus the other 2 
-   if(mouseX>845 && mouseX< 890 && mouseY>20 && mouseY < 65) { 
+  
+   //save 
+   if(mouseX>845 && mouseX< 920 && mouseY>20 && mouseY < 65) { 
    stroke(white); 
  } else { 
    stroke(black);
  }
-   
+ 
    rect(845 ,20, 75, 45); 
-     
-      if(mouseX>845 && mouseX< 890 && mouseY>75 && mouseY < 120) { 
+  fill(black); 
+   textAlign(CENTER, CENTER);//text 
+   text("save", 845 ,20, 75, 45);
+   fill(grey); 
+
+
+
+     //new
+      if(mouseX>845 && mouseX< 920 && mouseY>75 && mouseY < 120) { 
    stroke(white); 
  } else { 
    stroke(black);
  }
      
      rect(845 ,75 , 75, 45); 
+     fill(black); 
+   textAlign(CENTER, CENTER);//text 
+   text("new",845 ,75 , 75, 45);
+   fill(grey); 
      
-       if(mouseX>845 && mouseX< 890 && mouseY>130 && mouseY < 175) { 
+     
+     
+     
+     //load 
+       if(mouseX>845 && mouseX< 920 && mouseY>130 && mouseY < 175) { 
    stroke(white); 
  } else { 
    stroke(black);
  } 
      rect(845 ,130, 75 ,45); 
- 
+  fill(black); 
+   textAlign(CENTER, CENTER);//text 
+   text("load",845 ,130, 75 ,45);
+   fill(grey); 
+   
+   
+   
+   
  //buttons 
   if (dist(100, 50, mouseX, mouseY) < 25) {
     stroke(white);
@@ -234,13 +259,18 @@ if(speedOn == false) {
 
     stroke(selectedColor);
     strokeWeight(thickenss);
-   if (mouseY > 200) 
-   
+   if (mouseY > 200) {
     line(pmouseX, pmouseY, mouseX, mouseY);//drawing line 
+   }
+   
 
     thickenss = map(sliderX, 400, 600, 1, 75);
   } else {
-    image(speed, pmouseX, pmouseY, 100, 100); 
+   speedsize =map(sliderX, 400, 600 ,10 ,75);  
+   if (mouseY > 200) {
+  image(speed, mouseX, mouseY, speedsize, speedsize); //make it so that it doesnt go on the toolbar 
+   }
+   
   }
   }
   
@@ -251,8 +281,18 @@ if(speedOn == false) {
 
   void mouseReleased() {
     controlSlider();
+    
+    
     if(mouseX>650 && mouseX< 755 && mouseY>35 && mouseY < 145){
-    speedOn = !speedOn;
+    speedOn = !speedOn; 
+    
+  }
+  
+  //new
+   if(mouseX>845 && mouseX< 920 && mouseY>75 && mouseY < 120) { 
+      fill(grey);  
+    rect (0, 0, 1200, 1000);
+    
   }
   }
 
@@ -276,4 +316,17 @@ if(speedOn == false) {
       stroke(0); 
       strokeWeight(1);   
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
    }
