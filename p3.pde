@@ -21,15 +21,16 @@ float sliderMax = 700;
 float thickenss;
 PImage speed; 
 boolean speedOn; //true or false
+float speedsize;
 
 
 void setup() {
-
+background(grey); 
   size(1200, 1200);
   strokeWeight(2);
   sliderX = 500;
   shade = 123;
-
+speedsize =20; 
 speed = loadImage("speed.png");
 speedOn = false; 
 
@@ -44,7 +45,7 @@ void draw() {
   if (dist(0, 0, mouseX, mouseY) < 25) {
     stroke(white);
   } else {
-    stroke(white);
+    stroke(grey);
   }
 
 
@@ -66,29 +67,53 @@ void draw() {
  
  
  //save buttons plus the other 2 
-   if(mouseX>845 && mouseX< 890 && mouseY>20 && mouseY < 65) { 
+  
+   //save 
+   if(mouseX>845 && mouseX< 920 && mouseY>20 && mouseY < 65) { 
    stroke(white); 
  } else { 
    stroke(black);
  }
-   
+ 
    rect(845 ,20, 75, 45); 
-     
-      if(mouseX>845 && mouseX< 890 && mouseY>75 && mouseY < 120) { 
+  fill(black); 
+   textAlign(CENTER, CENTER);//text 
+   text("save", 845 ,20, 75, 45);
+   fill(grey); 
+
+
+
+     //new
+      if(mouseX>845 && mouseX< 920 && mouseY>75 && mouseY < 120) { 
    stroke(white); 
  } else { 
    stroke(black);
  }
      
      rect(845 ,75 , 75, 45); 
+     fill(black); 
+   textAlign(CENTER, CENTER);//text 
+   text("new",845 ,75 , 75, 45);
+   fill(grey); 
      
-       if(mouseX>845 && mouseX< 890 && mouseY>130 && mouseY < 175) { 
+     
+     
+     
+     //load 
+       if(mouseX>845 && mouseX< 920 && mouseY>130 && mouseY < 175) { 
    stroke(white); 
  } else { 
    stroke(black);
  } 
      rect(845 ,130, 75 ,45); 
- 
+  fill(black); 
+   textAlign(CENTER, CENTER);//text 
+   text("load",845 ,130, 75 ,45);
+   fill(grey); 
+   
+   
+   
+   
  //buttons 
   if (dist(100, 50, mouseX, mouseY) < 25) {
     stroke(white);
@@ -190,30 +215,38 @@ void draw() {
 //colorchangers for the colors 
     if (dist(100, 50, mouseX, mouseY) < 25) {
       selectedColor = black;
+      speedOn = false; 
     }
     if (dist( 175, 50, mouseX, mouseY) < 25) {
       selectedColor = DB;
+      speedOn = false; 
     }
     if (dist(250, 50, mouseX, mouseY) < 25) {
       selectedColor = ldb;
+      speedOn = false; 
     }
 
 
     if (dist(325, 50, mouseX, mouseY) < 25) {
       selectedColor=lb;
+      speedOn = false; 
     }
     if (dist(  100, 100+25, mouseX, mouseY) < 25) {
       selectedColor = midwhite;
+      speedOn = false; 
     }
     if (dist( 175, 100+25, mouseX, mouseY) < 25) {
       selectedColor = yellow;
+      speedOn = false; 
     }
 
     if (dist(  250, 100+25, mouseX, mouseY) < 25) {
       selectedColor = orange;
+      speedOn = false; 
     }
     if (dist( 325, 100+25, mouseX, mouseY) < 25) {
       selectedColor = or;
+      speedOn = false; 
     }
   }
 
@@ -226,13 +259,18 @@ if(speedOn == false) {
 
     stroke(selectedColor);
     strokeWeight(thickenss);
-   if (mouseY > 200) 
-   
+   if (mouseY > 200) {
     line(pmouseX, pmouseY, mouseX, mouseY);//drawing line 
+   }
+   
 
     thickenss = map(sliderX, 400, 600, 1, 75);
   } else {
-    image(speed, pmouseX, pmouseY, 100, 100); 
+   speedsize =map(sliderX, 400, 600 ,10 ,75);  
+   if (mouseY > 200) {
+  image(speed, mouseX, mouseY, speedsize, speedsize); //make it so that it doesnt go on the toolbar 
+   }
+   
   }
   }
   
@@ -243,9 +281,30 @@ if(speedOn == false) {
 
   void mouseReleased() {
     controlSlider();
+    
+    
     if(mouseX>650 && mouseX< 755 && mouseY>35 && mouseY < 145){
-    speedOn = !speedOn;
+    speedOn = !speedOn; 
+    
   }
+  
+  //new
+   if(mouseX>845 && mouseX< 920 && mouseY>75 && mouseY < 120) { 
+      fill(grey);  
+    rect (0, 0, 1200, 1000);
+    
+  }
+  
+  //save 
+    if(mouseX>845 && mouseX< 920 && mouseY>20 && mouseY < 65) {
+     selectInput("Pick an imagine to load", "openImgae"); 
+  }
+  
+//load 
+
+ if(mouseX>845 && mouseX< 920 && mouseY>130 && mouseY < 175){
+   selectInput("Pick an image to load", "openImage"); 
+ }
   }
 
 //slider controller
@@ -268,4 +327,25 @@ if(speedOn == false) {
       stroke(0); 
       strokeWeight(1);   
   }
+  
+
    }
+   void saveImage(File f) { 
+     if (f != null) {
+       PImage canvas = get( 71, 1, width-71, height-1); 
+       canvas.save(f.getAbsolutePath()); 
+     }
+   }
+     
+     
+     void openImage(File f) { 
+       if (f != null) { 
+         int n= 0;
+         while(n<100) { 
+           PImage pic = loadImage(f.getPath()); 
+           image(pic, 0,0); 
+           n= n+1; 
+         }
+       }
+     }
+   
